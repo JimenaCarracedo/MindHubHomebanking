@@ -11,7 +11,7 @@ public class ClientDTO {
     private String lastName;
     private String email;
 
-    private Set<Account> accountList;
+    private Set<AccountDTO> accountList;
     public ClientDTO() {
     }
 
@@ -20,7 +20,7 @@ public class ClientDTO {
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();
-        this.accountList=client.getAccounts();
+        this.accountList=getAccountList();
     }
 
     public long getId() {
@@ -39,7 +39,7 @@ public class ClientDTO {
         return email;
     }
 
-    public Set<Account> getAccountList() {
+    public Set<AccountDTO> getAccountList() {
         return accountList;
     }
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-@RestController("localhost:8080")
+@RestController
 public class AccountController {
     @Autowired
     AccountRepository accountRepository;
