@@ -1,15 +1,16 @@
 package com.mindhub.homebanking.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import static com.mindhub.homebanking.Models.TransactionType.DEPOSIT;
-import static com.mindhub.homebanking.Models.TransactionType.EXTRACTION;
+import static com.mindhub.homebanking.Models.TransactionType.*;
 
 
 @Entity
@@ -27,8 +28,8 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
-    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
-    Set<Transaction> transaction=new HashSet<>();
+    @ManyToMany(mappedBy="account", fetch=FetchType.EAGER)
+    Set<Transaction> transactions=new HashSet<>();
     public Account() {
     }
 
@@ -81,23 +82,25 @@ public class Account {
         this.client = client;
     }
     @JsonIgnore
-    public Set<Transaction> getTransaction() {
-        return transaction;
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setTransaction(Set<Transaction> transaction) {
-        this.transaction = transaction;
+    public void setTransaction(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
-    public void addTransaction(Transaction transaction){
+    public void addTransaction(List<Transaction> transactions){
+        for(int i=0; i<transactions.size(); i++){
+            if (transactions.get(i).getType().equals(DEBIT)) {
+                this.balance = this.balance - transactions.get(i).getAmount();
+                
+            } else if (transactions.get(i).getType().equals(CREDIT)) {
+                this.balance = this.balance + transactions.get(i).getAmount();
 
-
-        if(transaction.getType().equals(EXTRACTION)){
-            this.balance = this.balance-transaction.getAmount();
-        } else if (transaction.getType().equals(DEPOSIT)) {
-            this.balance = this.balance+transaction.getAmount();
-
+            }
         }
+
     }
 
 

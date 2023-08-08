@@ -3,6 +3,7 @@ package com.mindhub.homebanking.Models;
 
 
 
+import com.mindhub.homebanking.DTO.AccountDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

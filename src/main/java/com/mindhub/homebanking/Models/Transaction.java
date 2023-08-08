@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
@@ -31,6 +32,8 @@ public class Transaction {
         this.date = date;
 
     }
+
+
 
     public Account getAccount() {
         return account;

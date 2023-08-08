@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-@RestController("localhost:8080")
+@RestController
 public class AccountController {
     @Autowired
     AccountRepository accountRepository;
@@ -25,10 +25,10 @@ public class AccountController {
         return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
     @RequestMapping("/api/accounts/{id}")
-    public Optional<Account> getAccount(@PathVariable Long id){
+    public Optional<AccountDTO> getAccount(@PathVariable Long id){
 
-        Optional<Account> account;
-        account=accountRepository.findById(id);
+        Optional<AccountDTO> account;
+        account=accountRepository.findById(id).map(AccountDTO::new);
         return account;
     }
 }
