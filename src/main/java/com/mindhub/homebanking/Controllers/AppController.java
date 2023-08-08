@@ -1,8 +1,10 @@
 package com.mindhub.homebanking.Controllers;
 
 import com.mindhub.homebanking.Models.Client;
+import com.mindhub.homebanking.Models.Transaction;
 import com.mindhub.homebanking.Repositories.AccountRepository;
 import com.mindhub.homebanking.Repositories.ClientRepository;
+import com.mindhub.homebanking.Repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,4 +15,7 @@ public class AppController {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 }

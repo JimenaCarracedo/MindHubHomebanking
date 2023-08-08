@@ -5,7 +5,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
+
+import static com.mindhub.homebanking.Models.TransactionType.DEPOSIT;
+import static com.mindhub.homebanking.Models.TransactionType.EXTRACTION;
+
 
 @Entity
 public class Account {
@@ -22,6 +27,8 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
+    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
+    Set<Transaction> transaction=new HashSet<>();
     public Account() {
     }
 
@@ -31,6 +38,7 @@ public class Account {
         this.creationDate = creationDate;
         this.balance = balance;
         this.client =client;
+
     }
 
     public long getId() {
@@ -72,5 +80,26 @@ public class Account {
     public void setClient(Client client) {
         this.client = client;
     }
+    @JsonIgnore
+    public Set<Transaction> getTransaction() {
+        return transaction;
+    }
 
-}
+    public void setTransaction(Set<Transaction> transaction) {
+        this.transaction = transaction;
+    }
+
+    public void addTransaction(Transaction transaction){
+
+
+        if(transaction.getType().equals(EXTRACTION)){
+            this.balance = this.balance-transaction.getAmount();
+        } else if (transaction.getType().equals(DEPOSIT)) {
+            this.balance = this.balance+transaction.getAmount();
+
+        }
+    }
+
+
+    }
+
