@@ -1,43 +1,29 @@
-package com.mindhub.homebanking.Models;
+package com.mindhub.homebanking.DTO;
 
+import com.mindhub.homebanking.Models.Account;
+import com.mindhub.homebanking.Models.Transaction;
+import com.mindhub.homebanking.Models.TransactionType;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+public class TransactionDTO {
     private long id;
     private TransactionType type;
     private double amount;
     private String description;
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="account_id")
-    private Account account;
-
-    public Transaction() {
+    private Account accounts;
+    public TransactionDTO() {
     }
 
-    public Transaction(TransactionType type, double amount, String description, LocalDate date, Account account) {
-        this.type = type;
-        this.amount = amount;
-        this.description = description;
-        this.date = date;
-        this.account = account;
-    }
+    public TransactionDTO(Transaction transaction) {
+        this.type = transaction.getType();
+        this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
+        this.date = transaction.getDate();
+        this.accounts = transaction.getAccount();
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public long getId() {
@@ -78,5 +64,13 @@ public class Transaction {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Account getAccount() {
+        return accounts;
+    }
+
+    public void setAccount(Account account) {
+        this.accounts = account;
     }
 }

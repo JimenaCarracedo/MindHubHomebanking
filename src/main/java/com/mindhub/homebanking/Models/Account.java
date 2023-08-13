@@ -1,17 +1,14 @@
 package com.mindhub.homebanking.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 import static com.mindhub.homebanking.Models.TransactionType.*;
-
 
 @Entity
 public class Account {
@@ -28,8 +25,9 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
+
     @ManyToMany(mappedBy="account", fetch=FetchType.EAGER)
-    Set<Transaction> transactions=new HashSet<>();
+    private List<Transaction> transactions;
     public Account() {
     }
 
@@ -82,19 +80,20 @@ public class Account {
         this.client = client;
     }
     @JsonIgnore
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransaction(Set<Transaction> transactions) {
+    public void setTransaction(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
     public void addTransaction(List<Transaction> transactions){
         for(int i=0; i<transactions.size(); i++){
+
             if (transactions.get(i).getType().equals(DEBIT)) {
                 this.balance = this.balance - transactions.get(i).getAmount();
-                
+
             } else if (transactions.get(i).getType().equals(CREDIT)) {
                 this.balance = this.balance + transactions.get(i).getAmount();
 
@@ -104,5 +103,4 @@ public class Account {
     }
 
 
-    }
-
+}
