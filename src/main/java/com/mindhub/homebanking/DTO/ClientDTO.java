@@ -15,7 +15,8 @@ public class ClientDTO {
     private String lastName;
     private String email;
     private List<Loan> loans;
-    private Set<Account> accountList;
+    private Set<Account> accounts;
+    private int payments;
     public ClientDTO() {
     }
 
@@ -24,8 +25,8 @@ public class ClientDTO {
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();
-        this.accountList=client.getAccounts();
-        this.loans=client.getLoans();
+        this.accounts=client.getAccounts();
+
     }
 
     public long getId() {
@@ -45,7 +46,11 @@ public class ClientDTO {
     }
 
     public Set<Account> getAccountList() {
-        return accountList;
+        return accounts;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
     }
 
     public List<Loan> getLoans() {
@@ -54,5 +59,13 @@ public class ClientDTO {
 
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
+    }
+
+    public int getPayments() {
+        return payments;
+    }
+
+    public void setPayments(int payments) {
+        this.payments = payments;
     }
 }

@@ -30,6 +30,7 @@ public class Client {
     @OneToMany(mappedBy = "clientLoan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
+    private double amount;
     public Client() {
     }
 
@@ -70,7 +71,16 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
-    @JsonIgnore
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+
     public Set<Account> getAccounts() {
         return accounts;
     }
@@ -83,7 +93,7 @@ public class Client {
         this.clientLoans = clientLoans;
     }
 
-    @JsonIgnore
+
     public void addAccount(Account account) {
         account.setClient(this);
         accounts.add(account);
@@ -103,4 +113,5 @@ public class Client {
         clientLoans.add(clientLoan);
 
     }
+
 }

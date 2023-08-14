@@ -18,7 +18,7 @@ import java.util.*;
 
 import static com.mindhub.homebanking.Models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.Models.TransactionType.DEBIT;
-
+import static sun.security.krb5.Confounder.intValue;
 
 
 @SpringBootApplication
@@ -66,9 +66,9 @@ public class HomebankingApplication {
 			ClientLoan clientloan1 = new ClientLoan();
 
 			clientloan1.setLoan(loan);
-			clientloan1.setAmount(400000);
+			clientloan1.getLoan().setAmount(400000);
 			clientloan1.getLoan().setName(loan1.getName());
-			clientloan1.getLoan().setPayment(Collections.singletonList(loan1.getPayment().get(5)));
+			clientloan1.getLoan().setPayments(Collections.singletonList(loan1.getPayments().get(5)));
 			clientloan1.setClient(client);
 			loanRepository.save(loan);
 			clientRepository.save(client);

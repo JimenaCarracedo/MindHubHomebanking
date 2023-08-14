@@ -20,13 +20,15 @@ public class ClientLoan{
     @JoinColumn(name="loan_id")
     private Loan loan;
 
+    private int payments;
     public ClientLoan() {
     }
 
-    public ClientLoan(Loan loan, Client clientLoan) {
+    public ClientLoan(Loan loan, Client clientLoan, double amount, int payments) {
         this.loan=loan;
         this.clientLoan = clientLoan;
-
+        this.amount = amount;
+        this.payments=payments;
     }
 
     public long getId() {
@@ -44,6 +46,15 @@ public class ClientLoan{
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public int getPayments() {
+        return payments;
+    }
+
+    public void setPayments(int payments) {
+        this.payments = payments;
+    }
+
     @JsonIgnore
     public Client getClientLoan() {
         return clientLoan;
@@ -60,4 +71,6 @@ public class ClientLoan{
     public void setLoan(Loan loan) {
         this.loan = loan;
     }
+
+
 }
