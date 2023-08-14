@@ -21,7 +21,7 @@ public class Loan {
     @ElementCollection
     private List<Integer> payment= new ArrayList<>();
     @OneToMany(mappedBy = "loan", fetch=FetchType.EAGER)
-    private Set<ClientLoan> client= new HashSet<>();
+    private Set<ClientLoan> clientLoans;
     public Loan() {
     }
 
@@ -62,17 +62,18 @@ public class Loan {
     public void setPayment(List<Integer> payment) {
         this.payment = payment;
     }
-
-    public Set<ClientLoan> getClient() {
-        return client;
+    @JsonIgnore
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
     }
 
-    public void setClient(Set<ClientLoan> client) {
-        this.client = client;
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
     }
-    public void addClientLoans(ClientLoan clientLoan){
+
+    public void addLoans(ClientLoan clientLoan){
         clientLoan.setLoan(this);
-        client.add(clientLoan);
+        clientLoans.add(clientLoan);
     }
 
 }

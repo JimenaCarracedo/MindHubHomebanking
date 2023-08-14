@@ -62,18 +62,19 @@ public class HomebankingApplication {
 			Loan loan3 = new Loan("Automotriz", 300000, Arrays.asList(6,12,24,36));
 			loanRepository.save(loan3);
 
-
+			Loan loan = new Loan();
 			ClientLoan clientloan1 = new ClientLoan();
+
+			clientloan1.setLoan(loan);
 			clientloan1.setAmount(400000);
-			clientloan1.setName(loan1.getName());
-			clientloan1.setMaxAmount(loan1.getMaxAmount());
-			clientloan1.setPayment(Collections.singletonList(loan1.getPayment().get(5)));
+			clientloan1.getLoan().setName(loan1.getName());
+			clientloan1.getLoan().setPayment(Collections.singletonList(loan1.getPayment().get(5)));
 			clientloan1.setClient(client);
-			client.addLoan(clientloan1);
+			loanRepository.save(loan);
+			clientRepository.save(client);
 
 			clientLoanRepository.save(clientloan1);
-			loanRepository.save(clientloan1);
-			clientRepository.save(client);
+
 			/*ClientLoan clientloan2 = new ClientLoan();
 			clientloan2.setAmount(50000);
 			clientloan2.setLoan(loan2);

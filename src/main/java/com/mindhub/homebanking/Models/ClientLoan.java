@@ -1,19 +1,21 @@
 package com.mindhub.homebanking.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class ClientLoan extends Loan {
+public class ClientLoan{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private double amount;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="client_id")
-    private Client loanClient;
+    @JoinColumn(name="clientLoan_id")
+    private Client clientLoan;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="loan_id")
     private Loan loan;
@@ -21,10 +23,10 @@ public class ClientLoan extends Loan {
     public ClientLoan() {
     }
 
-    public ClientLoan(double amount, Client loanClient, Loan loan) {
-        this.amount = amount;
-        this.loanClient = loanClient;
-        this.loan = loan;
+    public ClientLoan(Loan loan, Client clientLoan) {
+        this.loan=loan;
+        this.clientLoan = clientLoan;
+
     }
 
     public long getId() {
@@ -42,15 +44,15 @@ public class ClientLoan extends Loan {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
-    public Client getLoanClient() {
-        return loanClient;
+    @JsonIgnore
+    public Client getClientLoan() {
+        return clientLoan;
     }
 
-    public void setClient(Client loanClient) {
-        this.loanClient = loanClient;
+    public void setClient(Client clientLoan) {
+        this.clientLoan = clientLoan;
     }
-
+    @JsonIgnore
     public Loan getLoan() {
         return loan;
     }

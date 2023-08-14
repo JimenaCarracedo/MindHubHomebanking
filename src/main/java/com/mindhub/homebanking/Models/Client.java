@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class Client {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
-    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clientLoan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() {
@@ -71,7 +70,7 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     public Set<Account> getAccounts() {
         return accounts;
     }
@@ -80,8 +79,8 @@ public class Client {
         this.accounts = accounts;
     }
 
-    public void setLoans(Set<ClientLoan> loans) {
-        this.clientLoans = loans;
+    public void setLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
     }
 
     @JsonIgnore
@@ -92,10 +91,13 @@ public class Client {
 
     }
 
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
     public List<Loan> getLoans() {
         return clientLoans.stream().map(sub -> sub.getLoan()).collect(toList());
     }
-
     public void addLoan(ClientLoan clientLoan) {
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);

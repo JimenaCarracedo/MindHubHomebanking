@@ -23,7 +23,7 @@ public class ClientLoanDTO {
         this.loan_id = client.getLoan().getId();
         this.name = client.getLoan().getName();
         this.amount =client.getAmount();
-        this.payment = client.getPayment();
+        this.payment = client.getLoan().getPayment();
     }
 
     public long getId() {
