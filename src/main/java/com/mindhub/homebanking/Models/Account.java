@@ -32,7 +32,6 @@ public class Account {
     }
 
     public Account(String number, LocalDate creationDate, double balance, Client client) {
-
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;

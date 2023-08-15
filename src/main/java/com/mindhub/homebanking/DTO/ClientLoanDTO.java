@@ -37,13 +37,8 @@ public class ClientLoanDTO {
     }
 
 
-    public long getLoanId() {
-        return loanId;
-    }
 
-    public void setLoanId(long loanId) {
-        this.loanId = loanId;
-    }
+
 
     public String getName() {
         return name;

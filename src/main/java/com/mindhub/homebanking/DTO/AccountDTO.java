@@ -20,6 +20,7 @@ public class AccountDTO {
     }
 
     public AccountDTO(Account account) {
+        this.id=account.getId();
         this.number = account.getNumber();
         this.creationDate = account.getDate();
         this.balance = account.getBalance();
