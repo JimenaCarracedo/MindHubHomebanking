@@ -9,14 +9,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+
+
 public class ClientDTO {
     private long id;
     private String firstName;
     private String lastName;
     private String email;
-    private List<Loan> loans;
-    private Set<Account> accounts;
-    private int payments;
+    private Set<ClientLoanDTO> loans;
+    private Set<AccountDTO> accounts;
+
     public ClientDTO() {
     }
 
@@ -25,8 +27,8 @@ public class ClientDTO {
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();
-        this.accounts=client.getAccounts();
-
+        this.accounts=client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toSet());
+        this.loans=client.getClientLoans().stream().map(loan -> new ClientLoanDTO(loan)).collect(Collectors.toSet());
     }
 
     public long getId() {
@@ -44,28 +46,17 @@ public class ClientDTO {
     public String getEmail() {
         return email;
     }
-
-    public Set<Account> getAccountList() {
+    public Set<AccountDTO> getAccounts() {
         return accounts;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
-
-    public List<Loan> getLoans() {
+    public Set<ClientLoanDTO> getLoans() {
         return loans;
     }
 
-    public void setLoans(List<Loan> loans) {
+    public void setLoans(Set<ClientLoanDTO> loans) {
         this.loans = loans;
     }
 
-    public int getPayments() {
-        return payments;
-    }
 
-    public void setPayments(int payments) {
-        this.payments = payments;
-    }
 }

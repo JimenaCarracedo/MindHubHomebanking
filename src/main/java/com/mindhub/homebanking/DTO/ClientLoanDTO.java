@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 
 public class ClientLoanDTO {
     private long id;
-    private long client_id;
-    private long loan_id;
+    private long loanId;
     private String name;
     private double amount;
     private int payments;
@@ -20,12 +19,12 @@ public class ClientLoanDTO {
     public ClientLoanDTO() {
     }
 
-    public ClientLoanDTO(ClientLoan client) {
-
-        this.loan_id = client.getLoan().getId();
-        this.name = client.getLoan().getName();
-        this.amount =client.getAmount();
-        this.payments = client.getLoan().getPayments().get(0);
+    public ClientLoanDTO(ClientLoan clientLoan) {
+        this.id=clientLoan.getId();
+        this.loanId = clientLoan.getLoan().getId();
+        this.name = clientLoan.getLoan().getName();
+        this.amount =clientLoan.getAmount();
+        this.payments = clientLoan.getPayments();
 
     }
 
@@ -37,20 +36,13 @@ public class ClientLoanDTO {
         this.id = id;
     }
 
-    public long getClient_id() {
-        return client_id;
+
+    public long getLoanId() {
+        return loanId;
     }
 
-    public void setClient_id(long client_id) {
-        this.client_id = client_id;
-    }
-
-    public long getLoan_id() {
-        return loan_id;
-    }
-
-    public void setLoan_id(long loan_id) {
-        this.loan_id = loan_id;
+    public void setLoanId(long loanId) {
+        this.loanId = loanId;
     }
 
     public String getName() {

@@ -26,7 +26,7 @@ public class Account {
     private Client client;
 
 
-    @ManyToMany(mappedBy="account", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     private List<Transaction> transactions;
     public Account() {
     }
@@ -71,7 +71,7 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-    @JsonIgnore
+
     public Client getClient() {
         return client;
     }
@@ -79,7 +79,6 @@ public class Account {
     public void setClient(Client client) {
         this.client = client;
     }
-    @JsonIgnore
     public List<Transaction> getTransactions() {
         return transactions;
     }

@@ -13,7 +13,6 @@ public class TransactionDTO {
     private String description;
     private LocalDate date;
 
-    private Account accounts;
     public TransactionDTO() {
     }
 
@@ -22,7 +21,7 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
-        this.accounts = transaction.getAccount();
+
 
     }
 
@@ -66,11 +65,5 @@ public class TransactionDTO {
         this.date = date;
     }
 
-    public Account getAccount() {
-        return accounts;
-    }
 
-    public void setAccount(Account account) {
-        this.accounts = account;
-    }
 }

@@ -18,7 +18,7 @@ import java.util.*;
 
 import static com.mindhub.homebanking.Models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.Models.TransactionType.DEBIT;
-import static sun.security.krb5.Confounder.intValue;
+
 
 
 @SpringBootApplication
@@ -62,26 +62,30 @@ public class HomebankingApplication {
 			Loan loan3 = new Loan("Automotriz", 300000, Arrays.asList(6,12,24,36));
 			loanRepository.save(loan3);
 
-			Loan loan = new Loan();
+			Loan loan4 = new Loan();
 			ClientLoan clientloan1 = new ClientLoan();
 
-			clientloan1.setLoan(loan);
-			clientloan1.getLoan().setAmount(400000);
+			clientloan1.setLoan(loan4);
+			clientloan1.setAmount(400000);
 			clientloan1.getLoan().setName(loan1.getName());
 			clientloan1.getLoan().setPayments(Collections.singletonList(loan1.getPayments().get(5)));
 			clientloan1.setClient(client);
-			loanRepository.save(loan);
+
+			loanRepository.save(loan4);
 			clientRepository.save(client);
 
 			clientLoanRepository.save(clientloan1);
+			Loan loan5 = new Loan();
+			ClientLoan clientloan2 = new ClientLoan();
 
-			/*ClientLoan clientloan2 = new ClientLoan();
+			clientloan2.setLoan(loan5);
 			clientloan2.setAmount(50000);
-			clientloan2.setLoan(loan2);
-			loan2.setPayment(Collections.singletonList(loan1.getPayment().get(1)));
+			clientloan2.getLoan().setName(loan2.getName());
+			clientloan2.getLoan().setPayments(Collections.singletonList(loan1.getPayments().get(1)));
 			clientloan2.setClient(client);
+			loanRepository.save(loan5);
 			clientLoanRepository.save(clientloan2);
-*/
+			clientRepository.save(client);
 
 
 

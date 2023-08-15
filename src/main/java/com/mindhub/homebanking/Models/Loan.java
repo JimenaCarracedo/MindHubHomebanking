@@ -74,7 +74,7 @@ public class Loan {
         this.amount = amount;
     }
 
-    @JsonIgnore
+
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;
     }
