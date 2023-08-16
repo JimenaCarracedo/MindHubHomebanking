@@ -1,13 +1,6 @@
-package com.mindhub.homebanking.DTO;
+package com.mindhub.homebanking.dtos;
 
-import com.mindhub.homebanking.Models.Account;
-import com.mindhub.homebanking.Models.Client;
-import com.mindhub.homebanking.Models.ClientLoan;
-import com.mindhub.homebanking.Models.Loan;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.mindhub.homebanking.models.ClientLoan;
 
 public class ClientLoanDTO {
     private long id;
@@ -16,8 +9,6 @@ public class ClientLoanDTO {
     private double amount;
     private int payments;
 
-    public ClientLoanDTO() {
-    }
 
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.id=clientLoan.getId();
@@ -56,11 +47,11 @@ public class ClientLoanDTO {
         this.amount = amount;
     }
 
-    public int getPayment() {
+    public int getPayments() {
         return payments;
     }
 
-    public void setPayment(int payments) {
+    public void setPayments(int payments) {
         this.payments = payments;
     }
 }

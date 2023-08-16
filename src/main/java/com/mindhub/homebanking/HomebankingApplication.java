@@ -1,10 +1,10 @@
 package com.mindhub.homebanking;
 
 
-import com.mindhub.homebanking.Models.*;
+import com.mindhub.homebanking.models.*;
 
 
-import com.mindhub.homebanking.Repositories.*;
+import com.mindhub.homebanking.repositories.*;
 
 
 import org.springframework.boot.CommandLineRunner;
@@ -16,10 +16,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-import static com.mindhub.homebanking.Models.CardColor.GOLD;
-import static com.mindhub.homebanking.Models.CardColor.TITANIUM;
-import static com.mindhub.homebanking.Models.TransactionType.CREDIT;
-import static com.mindhub.homebanking.Models.TransactionType.DEBIT;
+import static com.mindhub.homebanking.models.CardColor.GOLD;
+import static com.mindhub.homebanking.models.CardColor.TITANIUM;
+import static com.mindhub.homebanking.models.TransactionType.CREDIT;
+import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 
 
 

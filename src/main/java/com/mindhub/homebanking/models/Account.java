@@ -1,6 +1,5 @@
-package com.mindhub.homebanking.Models;
+package com.mindhub.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-import static com.mindhub.homebanking.Models.TransactionType.*;
+import static com.mindhub.homebanking.models.TransactionType.*;
 
 @Entity
 public class Account {

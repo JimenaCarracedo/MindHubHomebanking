@@ -1,10 +1,8 @@
-package com.mindhub.homebanking.DTO;
+package com.mindhub.homebanking.dtos;
 
 
-import com.mindhub.homebanking.Models.*;
-import com.mindhub.homebanking.Models.Client;
+import com.mindhub.homebanking.models.Client;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

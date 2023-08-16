@@ -1,17 +1,13 @@
-package com.mindhub.homebanking.Models;
+package com.mindhub.homebanking.models;
 
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static java.util.stream.Collectors.toList;
 
 @Entity
 

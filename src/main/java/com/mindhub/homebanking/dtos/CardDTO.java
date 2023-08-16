@@ -1,20 +1,13 @@
-package com.mindhub.homebanking.Models;
+package com.mindhub.homebanking.dtos;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.mindhub.homebanking.models.Card;
+import com.mindhub.homebanking.models.CardColor;
+import com.mindhub.homebanking.models.CardType;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
-@Entity
-public class Card {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+public class CardDTO {
     private long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="client_id")
-    private Client client;
     private String cardholder;
     private CardType type;
     private CardColor color;
@@ -23,17 +16,18 @@ public class Card {
     private LocalDate thruDate;
     private LocalDate fromDate;
 
-    public Card() {
+    public CardDTO() {
     }
 
-    public Card(String cardholder, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
-        this.cardholder = cardholder;
-        this.type = type;
-        this.color = color;
-        this.number = number;
-        this.cvv = cvv;
-        this.thruDate = thruDate;
-        this.fromDate = fromDate;
+    public CardDTO(Card card) {
+        this.id = card.getId();
+        this.cardholder = card.getCardholder();
+        this.type = card.getType();
+        this.color = card.getColor();
+        this.number = card.getNumber();
+        this.cvv = card.getCvv();
+        this.thruDate = card.getThruDate();
+        this.fromDate = card.getFromDate();
     }
 
     public long getId() {
@@ -98,13 +92,5 @@ public class Card {
 
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 }
