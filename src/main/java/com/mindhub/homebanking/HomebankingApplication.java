@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 
+import static com.mindhub.homebanking.Models.CardColor.GOLD;
+import static com.mindhub.homebanking.Models.CardColor.TITANIUM;
 import static com.mindhub.homebanking.Models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.Models.TransactionType.DEBIT;
 
@@ -30,7 +32,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 
 		return (args) -> {
 			// save a client
@@ -116,6 +118,19 @@ public class HomebankingApplication {
 			clientloan4.setClient(client1);
 			loanRepository.save(loan7);
 			clientLoanRepository.save(clientloan4);
+			clientRepository.save(client1);
+
+			Card card1 = new Card(client.getFirstName()+" "+client.getLastName(), CardType.DEBIT, GOLD, "123456789", 789, LocalDate.now().plusYears(5), LocalDate.now());
+			card1.setClient(client);
+			cardRepository.save(card1);
+			clientRepository.save(client);
+			Card card2 = new Card(client.getFirstName()+" "+client.getLastName(), CardType.CREDIT, GOLD, "123456789A", 456, LocalDate.now().plusYears(5), LocalDate.now());
+			card2.setClient(client);
+			cardRepository.save(card2);
+			clientRepository.save(client);
+			Card card3 = new Card(client1.getFirstName()+" "+client1.getLastName(), CardType.CREDIT, TITANIUM, "0123456789", 123, LocalDate.now().plusYears(5), LocalDate.now());
+			card3.setClient(client1);
+			cardRepository.save(card3);
 			clientRepository.save(client1);
 		};
 

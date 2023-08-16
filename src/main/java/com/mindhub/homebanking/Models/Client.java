@@ -31,6 +31,9 @@ public class Client {
     private Set<ClientLoan> loans = new HashSet<>();
 
     private double amount;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Card> cards;
     public Client() {
     }
 
@@ -89,7 +92,7 @@ public class Client {
         this.accounts = accounts;
     }
 
-        public void addAccount(Account account) {
+    public void addAccount(Account account) {
         account.setClient(this);
         accounts.add(account);
 
@@ -106,4 +109,15 @@ public class Client {
 
     }
 
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+    public void addCards(Card card){
+        card.setClient(this);
+        cards.add(card);
+     }
 }
