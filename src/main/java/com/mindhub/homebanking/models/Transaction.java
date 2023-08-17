@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.models;
 
 
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
+
     private TransactionType type;
     private double amount;
     private String description;

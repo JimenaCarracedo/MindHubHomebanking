@@ -6,8 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.mindhub.homebanking.models.TransactionType.CREDIT;
+import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 
-import static com.mindhub.homebanking.models.TransactionType.*;
 
 @Entity
 public class Account {

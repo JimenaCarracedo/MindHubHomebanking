@@ -20,11 +20,11 @@ public class ClientLoanDTO {
     }
 
     public long getId() {
-        return id;
+        return loanId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.loanId = id;
     }
 
 
