@@ -23,8 +23,9 @@ public class WebAuthorization{
                 .antMatchers(HttpMethod.GET, "/web/index" ).permitAll()
 
                 .antMatchers(HttpMethod.POST, "/web/login").hasAnyAuthority("ADMIN", "CLIENT")
-
+                .antMatchers(HttpMethod.GET, "api/clients/current").hasAuthority("USER")
                 .antMatchers(HttpMethod.GET, "web/accounts").hasAuthority("USER")
+
                 .antMatchers(HttpMethod.GET, "/api/admin/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/api/**").hasAuthority("CLIENT")

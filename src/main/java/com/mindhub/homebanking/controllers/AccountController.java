@@ -4,6 +4,7 @@ package com.mindhub.homebanking.controllers;
 
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -24,14 +25,18 @@ public class AccountController {
     AccountRepository accountRepository;
     @Autowired
     ClientRepository clientRepository;
+    @RequestMapping("/accounts")
+    public List<AccountDTO> findAccount() {
 
+        return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
+
+    }
     @RequestMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
 
         return new AccountDTO(accountRepository.findById(id).orElse(null));
     }
-    @RequestMapping("/accounts")
-    public List<Account> getAll(Authentication authentication) {
-        return accountRepository.findByNumber(authentication.name());
-    }
+
+
+
 }

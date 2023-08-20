@@ -1,10 +1,12 @@
 package com.mindhub.homebanking.models;
 
+import com.mindhub.homebanking.dtos.TransactionDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
@@ -27,7 +29,7 @@ public class Account {
 
 
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
-    private List<Transaction> transactions;
+    private Set<Transaction> transactions;
     public Account() {
     }
 
@@ -78,11 +80,11 @@ public class Account {
     public void setClient(Client client) {
         this.client = client;
     }
-    public List<Transaction> getTransactions() {
+    public Set<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransaction(List<Transaction> transactions) {
+    public void setTransaction(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -90,10 +92,10 @@ public class Account {
         for(int i=0; i<transactions.size(); i++){
 
             if (transactions.get(i).getType().equals(DEBIT)) {
-                this.balance = this.balance - transactions.get(i).getAmount();
+                this.balance -= transactions.get(i).getAmount();
 
             } else if (transactions.get(i).getType().equals(CREDIT)) {
-                this.balance = this.balance + transactions.get(i).getAmount();
+                this.balance += transactions.get(i).getAmount();
 
             }
         }
