@@ -18,7 +18,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/web")
+@RequestMapping("/api")
 public class AccountController {
     @Autowired
     AccountRepository accountRepository;
@@ -30,8 +30,8 @@ public class AccountController {
 
         return new AccountDTO(accountRepository.findById(id).orElse(null));
     }
-    /*@RequestMapping("/accounts")
+    @RequestMapping("/accounts")
     public List<Account> getAll(Authentication authentication) {
         return accountRepository.findByNumber(authentication.name());
-    }*/
+    }
 }

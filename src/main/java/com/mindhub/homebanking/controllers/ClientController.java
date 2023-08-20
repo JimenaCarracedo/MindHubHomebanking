@@ -25,7 +25,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/web")
+@RequestMapping("/api")
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
@@ -82,7 +82,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
-    @RequestMapping("api/clients/current/{email}")
+    @RequestMapping("/clients/current/{email}")
     public Client findCurrentClient(Authentication authentication){
         return clientRepository.findByEmail(authentication.name());
     }

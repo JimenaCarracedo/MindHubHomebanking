@@ -24,6 +24,7 @@ public class WebAuthorization{
 
                 .antMatchers(HttpMethod.POST, "/web/login").hasAnyAuthority("ADMIN", "CLIENT")
 
+                .antMatchers(HttpMethod.GET, "web/accounts").hasAuthority("USER")
                 .antMatchers(HttpMethod.GET, "/api/admin/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/api/**").hasAuthority("CLIENT")
@@ -39,11 +40,6 @@ public class WebAuthorization{
 
 
         http.logout().logoutUrl("/api/logout");
-
-
-
-
-
         // turn off checking for CSRF tokens
 
         http.csrf().disable();
