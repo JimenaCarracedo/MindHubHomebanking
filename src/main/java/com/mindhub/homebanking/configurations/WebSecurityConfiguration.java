@@ -22,14 +22,15 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
 
             Client client = clientRepository.findByEmail(email);
 
-            if (client != null) {
+             if (client != null) {
 
                 return new User(client.getEmail(), client.getPassword(),
 
                         AuthorityUtils.createAuthorityList("CLIENT"));
-
-
-            } else {
+            }else if(client.getFirstName().equalsIgnoreCase("admin")){
+                return new User(client.getEmail(), client.getPassword(),
+                        AuthorityUtils.createAuthorityList("ADMIN"));
+            }else {
 
                 throw new UsernameNotFoundException("Unknown user: " + email);
 

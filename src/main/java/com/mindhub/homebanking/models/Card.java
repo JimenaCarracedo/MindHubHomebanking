@@ -14,7 +14,7 @@ public class Card {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
-    private String cardholder;
+    private String cardHolder;
     private CardType type;
     private CardColor color;
     private String number;
@@ -26,7 +26,7 @@ public class Card {
     }
 
     public Card(String cardholder, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
-        this.cardholder = cardholder;
+        this.cardHolder = cardholder;
         this.type = type;
         this.color = color;
         this.number = number;
@@ -44,11 +44,11 @@ public class Card {
     }
 
     public String getCardholder() {
-        return cardholder;
+        return cardHolder;
     }
 
     public void setCardholder(String cardholder) {
-        this.cardholder = cardholder;
+        this.cardHolder = cardholder;
     }
 
     public CardType getType() {
