@@ -26,7 +26,7 @@ public class WebAuthorization{
 
                 .antMatchers(HttpMethod.GET, "/api/admin/**").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/api/**").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("ADMIN", "CLIENT")
 
                 .antMatchers(HttpMethod.GET, "/api/accounts").hasAnyAuthority("ADMIN", "CLIENT");
         http.formLogin()

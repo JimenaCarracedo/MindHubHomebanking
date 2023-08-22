@@ -36,13 +36,13 @@ public class ClientController {
     @Autowired
     AccountRepository accountRepository;
 
-    @RequestMapping("/clients")
+    @RequestMapping("/admin")
     public List<ClientDTO> findClient() {
 
         return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
 
     }
-    @RequestMapping("/clients/{id}")
+    @RequestMapping("/admin/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
 
@@ -89,6 +89,5 @@ public class ClientController {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
 
     }
-
 
 }
