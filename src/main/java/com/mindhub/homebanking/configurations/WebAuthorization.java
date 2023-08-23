@@ -21,14 +21,15 @@ public class WebAuthorization{
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .antMatchers(HttpMethod.GET, "/web/index" ).permitAll()
-                .antMatchers(HttpMethod.GET, "api/clients/current").hasAnyAuthority("ADMIN", "CLIENT")
-                .antMatchers(HttpMethod.GET, "web/accounts").hasAnyAuthority("ADMIN", "CLIENT")
-
+                .antMatchers(HttpMethod.GET, "api/clients/current").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/web/accounts.html").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers(HttpMethod.GET, "/web/cards.html").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers(HttpMethod.GET, "/web/account.html").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers(HttpMethod.GET, "/api/admin/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("ADMIN", "CLIENT")
 
-                .antMatchers(HttpMethod.GET, "/api/accounts").hasAnyAuthority("ADMIN", "CLIENT");
+                .antMatchers(HttpMethod.GET, "/api/accounts").hasAuthority("ADMIN");
         http.formLogin()
 
                 .usernameParameter("email")
