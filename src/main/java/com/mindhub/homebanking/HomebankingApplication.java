@@ -109,15 +109,15 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientloan4);
 			clientRepository.save(client1);
 
-			Card card1 = new Card(client.getFirstName() + " " + client.getLastName(), CardType.DEBIT, CardColor.GOLD, "123456789", 789, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card1 = new Card(client, client.getFirstName() + " " + client.getLastName(), CardType.DEBIT, CardColor.GOLD, "123456789", 789, LocalDate.now().plusYears(5), LocalDate.now());
 			card1.setClient(client);
 			cardRepository.save(card1);
 			clientRepository.save(client);
-			Card card2 = new Card(client.getFirstName() + " " + client.getLastName(), CardType.CREDIT, CardColor.GOLD, "123456789A", 456, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card2 = new Card(client, client.getFirstName() + " " + client.getLastName(), CardType.CREDIT, CardColor.GOLD, "123456789A", 456, LocalDate.now().plusYears(5), LocalDate.now());
 			card2.setClient(client);
 			cardRepository.save(card2);
 			clientRepository.save(client);
-			Card card3 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, CardColor.TITANIUM, "0123456789", 123, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card3 = new Card(client1, client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, CardColor.TITANIUM, "0123456789", 123, LocalDate.now().plusYears(5), LocalDate.now());
 			card3.setClient(client1);
 			cardRepository.save(card3);
 			clientRepository.save(client1);

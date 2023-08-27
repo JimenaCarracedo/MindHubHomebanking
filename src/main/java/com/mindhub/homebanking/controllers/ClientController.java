@@ -5,6 +5,7 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientLoanRepository;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -76,10 +78,11 @@ public class ClientController {
 
         }
 
-
-
-        clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-
+        Integer accountNumber = (int) Math.floor(Math.random()*Math.max(1, 100000));
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+        Account account = new Account("VIN"+accountNumber, LocalDate.now(), 0, client);
+        accountRepository.save(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }

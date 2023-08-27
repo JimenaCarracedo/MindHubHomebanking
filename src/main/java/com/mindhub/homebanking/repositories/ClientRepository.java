@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.repositories;
 
+import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -12,5 +13,6 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Client findByEmail(String email);
+
 
 }
