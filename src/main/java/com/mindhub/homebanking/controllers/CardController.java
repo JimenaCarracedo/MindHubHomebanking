@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.mindhub.homebanking.models.TransactionType.CREDIT;
-import static com.mindhub.homebanking.models.TransactionType.DEBIT;
+import static com.mindhub.homebanking.models.CardType.CREDIT;
+import static com.mindhub.homebanking.models.CardType.DEBIT;
 import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/api")
@@ -39,23 +39,40 @@ public class CardController {
     }
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> create(CardColor cardColor,
-                                         CardType cardType,
-                                         Authentication authentication) {
-        String name =clientRepository.findByEmail(authentication.getName()).getFirstName()+" "+clientRepository.findByEmail(authentication.getName()).getLastName();
-        Integer cardNumber1 = (int) Math.floor(Math.random()*Math.max(1, 10000));
-        Integer cardNumber2 = (int) Math.floor(Math.random()*Math.max(1, 10000));
-        Integer cardNumber3 = (int) Math.floor(Math.random()*Math.max(1, 10000));
-        Integer cardNumber4 = (int) Math.floor(Math.random()*Math.max(1, 10000));
-        List<Card> cardsByClient = cardRepository.findByClient(clientRepository.findByEmail(authentication.getName()));
-        List<Card> cardsByType = cardRepository.findByType(cardType);
-        if (cardsByClient.size() < 7 && cardsByType.size() < 4) {
-                Card card = new Card(clientRepository.findByEmail(authentication.getName()), name, cardType, cardColor, cardNumber1.toString()+"-"+cardNumber2.toString()+"-"+cardNumber3.toString()+"-"+cardNumber4.toString(), 123, LocalDate.now().plusYears(5), LocalDate.now());
+    public ResponseEntity<Object> create(@RequestParam CardColor cardColor,
+                                         @RequestParam CardType cardType,
+                                         Authentication authentication, String number, Integer cvv) {
+        Client client = clientRepository.findByEmail(authentication.getName());
+        String name = clientRepository.findByEmail(authentication.getName()).getFirstName() + " " + clientRepository.findByEmail(authentication.getName()).getLastName();
+        Card card = new Card(client, name, DEBIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
+        List<Card> cardsByClient = cardRepository.findByClient(client);
+        List<Card> cardsByTypeDebit = cardRepository.findByType(cardType.DEBIT);
+        List<Card> cardsByTypeCredit = cardRepository.findByType(cardType.CREDIT);
+
+
+        if (cardsByClient.size() < 7) {
+            int cont=3;
+            card.setType(cardType);
+            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
+                cont++;
+                cardsByTypeDebit.add(card);
+                cardsByClient.add(card);
                 cardRepository.save(card);
                 return new ResponseEntity<>(HttpStatus.CREATED);
 
+            }
+
+            if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 5) {
+                cardsByTypeCredit.add(card);
+                cardsByClient.add(card);
+                cardRepository.save(card);
+
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
+

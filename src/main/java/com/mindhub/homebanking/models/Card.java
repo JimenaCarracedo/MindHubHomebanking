@@ -17,21 +17,25 @@ public class Card {
     private String cardHolder;
     private CardType type;
     private CardColor color;
-    private String number;
-    private int cvv;
+    private Integer cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
-
+    private String number;
     public Card() {
     }
+    Integer cardNumber1 = (int) Math.floor(Math.random()*Math.max(1, 10000));
+    Integer cardNumber2 = (int) Math.floor(Math.random()*Math.max(1, 10000));
+    Integer cardNumber3 = (int) Math.floor(Math.random()*Math.max(1, 10000));
+    Integer cardNumber4 = (int) Math.floor(Math.random()*Math.max(1, 10000));
 
-    public Card(Client client, String cardholder, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
+
+    public Card(Client client, String cardholder, CardType type, CardColor color, String number, Integer cvv, LocalDate thruDate, LocalDate fromDate) {
         this.client= client;
         this.cardHolder = cardholder;
         this.type = type;
         this.color = color;
-        this.number = number;
-        this.cvv = cvv;
+        this.number =cardNumber1.toString()+"-"+cardNumber2.toString()+"-"+cardNumber3.toString()+"-"+cardNumber4.toString();
+        this.cvv =(int) Math.floor(Math.random()*Math.max(1, 1000));
         this.thruDate = thruDate;
         this.fromDate = fromDate;
     }

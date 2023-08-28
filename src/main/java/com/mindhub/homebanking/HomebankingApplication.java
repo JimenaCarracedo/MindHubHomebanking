@@ -110,10 +110,14 @@ public class HomebankingApplication {
 			clientRepository.save(client1);
 
 			Card card1 = new Card(client, client.getFirstName() + " " + client.getLastName(), CardType.DEBIT, CardColor.GOLD, "123456789", 789, LocalDate.now().plusYears(5), LocalDate.now());
+
 			card1.setClient(client);
 			cardRepository.save(card1);
 			clientRepository.save(client);
+
+
 			Card card2 = new Card(client, client.getFirstName() + " " + client.getLastName(), CardType.CREDIT, CardColor.GOLD, "123456789A", 456, LocalDate.now().plusYears(5), LocalDate.now());
+
 			card2.setClient(client);
 			cardRepository.save(card2);
 			clientRepository.save(client);
