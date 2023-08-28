@@ -54,7 +54,6 @@ public class CardController {
             int cont=3;
             card.setType(cardType);
             if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
-                cont++;
                 cardsByTypeDebit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
@@ -63,6 +62,7 @@ public class CardController {
             }
 
             if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 5) {
+                cont++;
                 cardsByTypeCredit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
