@@ -50,10 +50,11 @@ public class CardController {
         List<Card> cardsByTypeCredit = cardRepository.findByType(cardType.CREDIT);
 
 
-        if (cardsByClient.size() < 7) {
+        if (cardsByClient.size() < 7&&cardsByClient.size()%2!=0) {
             int cont=3;
             card.setType(cardType);
             if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
+                cont++;
                 cardsByTypeDebit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
@@ -62,7 +63,26 @@ public class CardController {
             }
 
             if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 5) {
+                cardsByTypeCredit.add(card);
+                cardsByClient.add(card);
+                cardRepository.save(card);
+
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        }
+        if (cardsByClient.size() < 7&&cardsByClient.size()%2==0) {
+            int cont=2;
+            card.setType(cardType);
+            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
                 cont++;
+                cardsByTypeDebit.add(card);
+                cardsByClient.add(card);
+                cardRepository.save(card);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+
+            }
+
+            if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 5) {
                 cardsByTypeCredit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
