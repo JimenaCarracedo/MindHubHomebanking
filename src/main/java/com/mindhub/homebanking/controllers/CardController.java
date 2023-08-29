@@ -71,10 +71,8 @@ public class CardController {
             }
         }
         if (cardsByClient.size() < 7&&cardsByClient.size()%2==0) {
-            int cont=2;
             card.setType(cardType);
-            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
-                cont++;
+            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < 4) {
                 cardsByTypeDebit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
@@ -82,7 +80,7 @@ public class CardController {
 
             }
 
-            if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 5) {
+            if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 4) {
                 cardsByTypeCredit.add(card);
                 cardsByClient.add(card);
                 cardRepository.save(card);
@@ -95,4 +93,3 @@ public class CardController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
-
