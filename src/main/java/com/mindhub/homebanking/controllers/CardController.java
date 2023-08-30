@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 import static com.mindhub.homebanking.models.CardType.CREDIT;
 import static com.mindhub.homebanking.models.CardType.DEBIT;
@@ -44,51 +45,34 @@ public class CardController {
                                          Authentication authentication, String number, Integer cvv) {
         Client client = clientRepository.findByEmail(authentication.getName());
         String name = clientRepository.findByEmail(authentication.getName()).getFirstName() + " " + clientRepository.findByEmail(authentication.getName()).getLastName();
-        Card card = new Card(client, name, DEBIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
         List<Card> cardsByClient = cardRepository.findByClient(client);
-        List<Card> cardsByTypeDebit = cardRepository.findByType(cardType.DEBIT);
-        List<Card> cardsByTypeCredit = cardRepository.findByType(cardType.CREDIT);
 
-
-        if (cardsByClient.size()< 7&&cardsByClient.size()%2!=0) {
-            int cont=3;
-            card.setType(cardType);
-            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < cont+1) {
-                cont++;
-                cardsByTypeDebit.add(card);
-                cardsByClient.add(card);
-                cardRepository.save(card);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+        int contC=0;
+        int contD=0;
+        for(int i=0; i<cardsByClient.size(); i++){
+            if(cardsByClient.get(i).getType().equals(CREDIT)){
+                contC++;
 
             }
-
-            if (card.getType().equals(CREDIT)&& cardsByTypeCredit.size() < 4) {
-                cardsByTypeCredit.add(card);
-                cardsByClient.add(card);
-                cardRepository.save(card);
-
-                return new ResponseEntity<>(HttpStatus.CREATED);
+            if(cardsByClient.get(i).getType().equals(DEBIT)){
+                contD++;
             }
-            clientRepository.save(client);
         }
-        if (cardsByClient.size() < 7&&cardsByClient.size()%2==0) {
-            card.setType(cardType);
-            if (card.getType().equals(DEBIT)&&cardsByTypeDebit.size() < 4) {
-                cardsByTypeDebit.add(card);
-                cardsByClient.add(card);
+        if (cardsByClient.size() < 7) {
+
+            if (contD<3&&cardType.equals(DEBIT)) {
+                Card card = new Card(client, name, DEBIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
                 cardRepository.save(card);
                 return new ResponseEntity<>(HttpStatus.CREATED);
 
             }
 
-            if (card.getType().equals(CREDIT)&&cardsByTypeCredit.size() < 4) {
-                cardsByTypeCredit.add(card);
-                cardsByClient.add(card);
+            if (cardType.equals(CREDIT) && contC < 3) {
+                Card card = new Card(client, name, CREDIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
                 cardRepository.save(card);
-
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
-            clientRepository.save(client);
+
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

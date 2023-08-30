@@ -17,7 +17,5 @@ import static com.mindhub.homebanking.models.CardType.DEBIT;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByClient(Client client);
-    List<Card> findByType(CardType cardType);
-
 
 }
