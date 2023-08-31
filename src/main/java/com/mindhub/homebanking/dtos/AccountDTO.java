@@ -35,9 +35,9 @@ public class AccountDTO {
         return transactions;
     }
 
-    public void setTransactions(Set<TransactionDTO> transactions) {
+    /*public void setTransactions(Set<TransactionDTO> transactions) {
         this.transactions = transactions;
-    }
+    }*/
 
     public long getId() {
         return id;
@@ -51,23 +51,23 @@ public class AccountDTO {
         return number;
     }
 
-    public void setNumber(String number) {
+    /*public void setNumber(String number) {
         this.number = number;
-    }
+    }*/
 
     public LocalDate getDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    /*public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
+    }*/
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    /*public void setBalance(double balance) {
         this.balance = balance;
-    }
+    }*/
 }
