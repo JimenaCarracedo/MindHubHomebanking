@@ -25,6 +25,7 @@ public class AccountDTO {
         this.creationDate = account.getDate();
         this.balance = account.getBalance();
         this.transactions = account.getTransactions().stream().map(transaction -> new TransactionDTO(transaction)).collect(Collectors.toSet());
+
     }
 
     public LocalDate getCreationDate() {
@@ -70,4 +71,5 @@ public class AccountDTO {
     /*public void setBalance(double balance) {
         this.balance = balance;
     }*/
+
 }

@@ -12,7 +12,7 @@ public class ClientLoan{
     private long id;
     private double amount;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="clientLoan_id")
+    @JoinColumn(name="client_id")
     private Client client;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="loan_id")

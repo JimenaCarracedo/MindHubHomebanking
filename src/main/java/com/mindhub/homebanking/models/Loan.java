@@ -1,4 +1,5 @@
 package com.mindhub.homebanking.models;
+import com.mindhub.homebanking.dtos.AccountDTO;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,10 @@ public class Loan {
     private List<Integer> payments= new ArrayList<>();
     @OneToMany(mappedBy = "loan", fetch=FetchType.EAGER)
     private Set<ClientLoan> clientLoans;
+    //@OneToMany(mappedBy = "loan", fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "account_id")
+    private Account accounts;
     public Loan() {
     }
 
@@ -27,6 +32,7 @@ public class Loan {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+
     }
 
     public long getId() {
@@ -83,4 +89,11 @@ public class Loan {
         clientLoans.add(clientLoan);
     }
 
+    public Account getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Account accounts) {
+        this.accounts = accounts;
+    }
 }

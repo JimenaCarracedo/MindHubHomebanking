@@ -30,6 +30,7 @@ public class Account {
 
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     private Set<Transaction> transactions;
+
     public Account() {
     }
 
