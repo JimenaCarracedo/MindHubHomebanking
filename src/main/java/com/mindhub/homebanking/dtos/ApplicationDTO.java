@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ApplicationDTO {
     private long id;
-    private double amount;
+    private Double amount;
     private List<Integer> payments;
     private String loanType;
     private Set<ClientLoan> clientLoans;
@@ -31,7 +31,7 @@ public class ApplicationDTO {
         return id;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 

@@ -11,5 +11,5 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface LoanRepository extends JpaRepository<Loan, Long> {
-    List<LoanDTO> findByName(String name);
+    Loan findByName(String name);
 }

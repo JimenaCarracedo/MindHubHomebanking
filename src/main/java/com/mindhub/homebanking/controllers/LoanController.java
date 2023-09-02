@@ -29,33 +29,30 @@ public class LoanController {
 
     @Autowired
     LoanRepository loanRepository;
+
     @RequestMapping("/loans")
-    public List<LoanDTO> getLoans(){
+    public List<LoanDTO> getLoans() {
         return loanRepository.findAll().stream().map(loanName -> new LoanDTO(loanName)).collect(Collectors.toList());
         //return clientLoanRepository.findByClient(clientRepository.findByEmail(authentication.getName())).stream().map(clientLoan -> new ApplicationDTO(clientLoan)).collect(Collectors.toList());
     }
-    /*@Transactional
-    @RequestMapping(path = "/loans", method = RequestMethod.POST)
-    public ResponseEntity<Object> createLoan(Authentication authentication,
-                                                    @RequestParam String loanType,
-                                                    @RequestParam Double amount,
-                                                    @RequestParam Integer payments,
-                                                    @RequestParam String toAccountNumber) {
-        if (loanType.isEmpty() || amount == null || payments==null) {
+
+    @Transactional
+    @RequestMapping(path = "api/loans", method = RequestMethod.POST)
+    public ResponseEntity<Object> createLoan(@RequestBody ApplicationDTO applicationDTO) {
+        if (applicationDTO.getLoanType().isEmpty() || applicationDTO.getAmount() == null || applicationDTO.getPayments() == null) {
 
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Loan newLoan = loanRepository.findByLoanType(loanType);
+        Loan newLoan = loanRepository.findByName(applicationDTO.getLoanType());
         if (newLoan == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        if(!newLoan.getClientLoans().stream().map(clientLoans -> new ApplicationDTO(clientLoans).getId()).equals(clientRepository.findByEmail(authentication.getName()).getId())){
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        if(!newLoan.getClientLoans().stream().map(clientLoans -> new ApplicationDTO(clientLoans).getLoanType()).equals(loanType)){
+        if (!newLoan.getClientLoans().equals(applicationDTO.getClientLoans())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        loanRepository.save(newLoan);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }*/
+
+    }
 }
