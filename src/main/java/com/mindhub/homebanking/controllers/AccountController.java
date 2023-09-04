@@ -12,6 +12,7 @@ import com.mindhub.homebanking.repositories.TransactionRepository;
 
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,11 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class AccountController {
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
     @Autowired
     private ClientService clientService;
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
     @RequestMapping("/accounts")
     public List<AccountDTO> findAccount() {
 

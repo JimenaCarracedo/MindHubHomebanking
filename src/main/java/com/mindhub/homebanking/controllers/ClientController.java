@@ -13,6 +13,7 @@ import com.mindhub.homebanking.repositories.ClientRepository;
 
 
 import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientLoanService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,9 +37,9 @@ public class ClientController {
     private ClientService clientService;
 
     @Autowired
-    private ClientLoanRepository clientLoanRepository;
+    private ClientLoanService clientLoanService;
     @Autowired
-    AccountRepository accountService;
+    private AccountService accountService;
 
     @RequestMapping("/admin")
     public List<ClientDTO> findClient() {

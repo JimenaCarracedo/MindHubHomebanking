@@ -4,8 +4,7 @@ import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.services.AccountService;
-import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +19,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class LoanController {
     @Autowired
-    ClientLoanRepository clientLoanRepository;
+    private ClientLoanService clientLoanService;
     @Autowired
     private ClientService clientService;
 
     @Autowired
-    LoanRepository loanRepository;
+    private LoanService loanService;
 
     @Autowired
     private AccountRepository accountService;
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @GetMapping("/loans")
     public List<LoanDTO> getLoans() {
-        return loanRepository.findAll().stream().map(loanName -> new LoanDTO(loanName)).collect(Collectors.toList());
+        return loanService.findAll().stream().map(loanName -> new LoanDTO(loanName)).collect(Collectors.toList());
         //return clientLoanRepository.findByClient(clientRepository.findByEmail(authentication.getName())).stream().map(clientLoan -> new ApplicationDTO(clientLoan)).collect(Collectors.toList());
     }
 
@@ -47,7 +46,7 @@ public class LoanController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Loan newLoan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
+        Loan newLoan = loanService.findById(loanApplicationDTO.getLoanId()).orElse(null);
         if (newLoan == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -71,10 +70,10 @@ public class LoanController {
         clientLoan.setLoan(newLoan);
         clientLoan.getLoan().setName(newLoan.getName());
         clientLoan.setClient(clientService.findByEmail(authentication.getName()));
-        clientLoanRepository.save(clientLoan);
+        clientLoanService.save(clientLoan);
         account.setBalance(account.getBalance()+ transaction.getAmount());
         accountService.save(account);
-        transactionRepository.save(transaction);
+        transactionService.save(transaction);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
