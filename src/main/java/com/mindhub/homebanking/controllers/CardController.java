@@ -8,6 +8,7 @@ import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,14 +30,14 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class CardController {
     @Autowired
-    CardRepository cardRepository;
+    private CardService cardService;
     @Autowired
     private ClientService clientService;
 
     @RequestMapping("/clients/current/cards")
     public List<CardDTO> findCard(Authentication authentication) {
 
-        return cardRepository.findByClient(clientService.findByEmail(authentication.getName())).stream().map(CardDTO::new).collect(toList());
+        return cardService.findByClient(clientService.findByEmail(authentication.getName())).stream().map(CardDTO::new).collect(toList());
 
     }
 
@@ -46,7 +47,7 @@ public class CardController {
                                          Authentication authentication, String number, Integer cvv) {
         Client client = clientService.findByEmail(authentication.getName());
         String name = clientService.findByEmail(authentication.getName()).getFirstName() + " " + clientService.findByEmail(authentication.getName()).getLastName();
-        List<Card> cardsByClient = cardRepository.findByClient(client);
+        List<Card> cardsByClient = cardService.findByClient(client);
 
         int contC=0;
         int contD=0;
@@ -63,14 +64,14 @@ public class CardController {
 
             if (contD<3&&cardType.equals(DEBIT)) {
                 Card card = new Card(client, name, DEBIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
-                cardRepository.save(card);
+                cardService.save(card);
                 return new ResponseEntity<>(HttpStatus.CREATED);
 
             }
 
             if (cardType.equals(CREDIT) && contC < 3) {
                 Card card = new Card(client, name, CREDIT, cardColor, number, cvv, LocalDate.now().plusYears(5), LocalDate.now());
-                cardRepository.save(card);
+                cardService.save(card);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
 

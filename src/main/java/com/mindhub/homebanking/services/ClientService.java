@@ -11,5 +11,5 @@ public interface ClientService {
     List<Client> findAll();
     Client findById(long id);
 
-    public void save(Client client);
+    void save(Client client);
 }
