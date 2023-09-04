@@ -13,7 +13,7 @@ import java.util.List;
 @RepositoryRestResource
 public interface AccountRepository extends JpaRepository<Account, Long> {
     List <Account> findByClient(Client client);
-    List<Account> findById(Id id);
+    Account findById(long id);
 
     Account findByNumber(String number);
 }

@@ -7,6 +7,8 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +30,10 @@ public class TransactionController {
 
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository accountService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
     private TransactionRepository transactionRepository;
     @RequestMapping("/transactions")
@@ -53,7 +55,7 @@ public class TransactionController {
         if (fromAccountNumber.equals(toAccountNumber)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Account accountTransaction = accountRepository.findByNumber(fromAccountNumber);
+        Account accountTransaction = accountService.findByNumber(fromAccountNumber);
         if (accountTransaction == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -61,7 +63,7 @@ public class TransactionController {
         if (!accountTransaction.getClient().getEmail().equals(authentication.getName())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Account accountTo = accountRepository.findByNumber(toAccountNumber);
+        Account accountTo = accountService.findByNumber(toAccountNumber);
         if (accountTo == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

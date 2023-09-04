@@ -12,6 +12,8 @@ import com.mindhub.homebanking.repositories.ClientLoanRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 
 
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -31,24 +33,24 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class ClientController {
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     private ClientLoanRepository clientLoanRepository;
     @Autowired
-    AccountRepository accountRepository;
+    AccountRepository accountService;
 
     @RequestMapping("/admin")
     public List<ClientDTO> findClient() {
 
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+        return clientService.findAll().stream().map(ClientDTO::new).collect(toList());
 
     }
     @RequestMapping("/admin/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
 
-        return new ClientDTO(clientRepository.findById(id).orElse(null));
+        return new ClientDTO(clientService.findById(id));
 
     }
     @Autowired
@@ -72,7 +74,7 @@ public class ClientController {
 
 
 
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientService.findByEmail(email) !=  null) {
 
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
 
@@ -80,16 +82,16 @@ public class ClientController {
 
         Integer accountNumber = (int) Math.floor(Math.random()*Math.max(1, 100000));
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        clientRepository.save(client);
+        clientService.save(client);
         Account account = new Account("VIN"+accountNumber, LocalDate.now(), 0, client);
-        accountRepository.save(account);
+        accountService.save(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
     @RequestMapping("/clients/current")
     public ClientDTO getAll(Authentication authentication) {
 
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO(clientService.findByEmail(authentication.getName()));
 
     }
 

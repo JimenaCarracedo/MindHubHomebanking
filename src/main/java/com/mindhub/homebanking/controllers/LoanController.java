@@ -4,6 +4,8 @@ import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,13 @@ public class LoanController {
     @Autowired
     ClientLoanRepository clientLoanRepository;
     @Autowired
-    ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     LoanRepository loanRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountService;
     @Autowired
     TransactionRepository transactionRepository;
 
@@ -49,8 +51,8 @@ public class LoanController {
         if (newLoan == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Account account = accountRepository.findByNumber(loanApplicationDTO.getToAccountNumber());
-        if (!account.getClient().equals(clientRepository.findByEmail(authentication.getName()))) {
+        Account account = accountService.findByNumber(loanApplicationDTO.getToAccountNumber());
+        if (!account.getClient().equals(clientService.findByEmail(authentication.getName()))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -68,9 +70,10 @@ public class LoanController {
         ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() * 1.2, loanApplicationDTO.getPayments());
         clientLoan.setLoan(newLoan);
         clientLoan.getLoan().setName(newLoan.getName());
-        clientLoan.setClient(clientRepository.findByEmail(authentication.getName()));
+        clientLoan.setClient(clientService.findByEmail(authentication.getName()));
         clientLoanRepository.save(clientLoan);
-        accountRepository.save(account);
+        account.setBalance(account.getBalance()+ transaction.getAmount());
+        accountService.save(account);
         transactionRepository.save(transaction);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
