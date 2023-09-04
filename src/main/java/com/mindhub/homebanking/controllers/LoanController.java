@@ -1,18 +1,13 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.ApplicationDTO;
-import com.mindhub.homebanking.dtos.ClientLoanDTO;
+import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
-import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.ClientLoanRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -30,29 +25,54 @@ public class LoanController {
     @Autowired
     LoanRepository loanRepository;
 
-    @RequestMapping("/loans")
+    @Autowired
+    AccountRepository accountRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
+
+    @GetMapping("/loans")
     public List<LoanDTO> getLoans() {
         return loanRepository.findAll().stream().map(loanName -> new LoanDTO(loanName)).collect(Collectors.toList());
         //return clientLoanRepository.findByClient(clientRepository.findByEmail(authentication.getName())).stream().map(clientLoan -> new ApplicationDTO(clientLoan)).collect(Collectors.toList());
     }
 
-    @Transactional
-    @RequestMapping(path = "api/loans", method = RequestMethod.POST)
-    public ResponseEntity<Object> createLoan(@RequestBody ApplicationDTO applicationDTO) {
-        if (applicationDTO.getLoanType().isEmpty() || applicationDTO.getAmount() == null || applicationDTO.getPayments() == null) {
+
+    @RequestMapping(path = "/loans", method = RequestMethod.POST)
+    public ResponseEntity<Object> createLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
+
+        if (loanApplicationDTO == null) {
 
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Loan newLoan = loanRepository.findByName(applicationDTO.getLoanType());
+        Loan newLoan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
         if (newLoan == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        if (!newLoan.getClientLoans().equals(applicationDTO.getClientLoans())) {
+        Account account = accountRepository.findByNumber(loanApplicationDTO.getToAccountNumber());
+        if (!account.getClient().equals(clientRepository.findByEmail(authentication.getName()))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        loanRepository.save(newLoan);
-        return new ResponseEntity<>(HttpStatus.CREATED);
 
+
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Transaction transaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loanApplicationDTO.getToAccountNumber() + " loan approved", LocalDate.now(), account);
+        if (transaction.getAmount() > newLoan.getMaxAmount()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (!newLoan.getPayments().contains(loanApplicationDTO.getPayments())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() * 1.2, loanApplicationDTO.getPayments());
+        clientLoan.setLoan(newLoan);
+        clientLoan.getLoan().setName(newLoan.getName());
+        clientLoan.setClient(clientRepository.findByEmail(authentication.getName()));
+        clientLoanRepository.save(clientLoan);
+        accountRepository.save(account);
+        transactionRepository.save(transaction);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }

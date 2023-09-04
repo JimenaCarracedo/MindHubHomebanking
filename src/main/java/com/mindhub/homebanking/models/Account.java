@@ -28,7 +28,7 @@ public class Account {
     private Client client;
 
 
-    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="account")
     private Set<Transaction> transactions;
 
     public Account() {
@@ -89,19 +89,16 @@ public class Account {
         this.transactions = transactions;
     }
 
-    public void addTransaction(List<Transaction> transactions){
-        for(int i=0; i<transactions.size(); i++){
+    public void addTransaction(Transaction transactions){
 
-            if (transactions.get(i).getType().equals(DEBIT)) {
-                this.balance -= transactions.get(i).getAmount();
+            if (transactions.getType().equals(DEBIT)) {
+                this.balance -= transactions.getAmount();
 
-            } else if (transactions.get(i).getType().equals(CREDIT)) {
-                this.balance += transactions.get(i).getAmount();
+            } else if (transactions.getType().equals(CREDIT)) {
+                this.balance += transactions.getAmount();
 
             }
-        }
+
 
     }
-
-
 }
