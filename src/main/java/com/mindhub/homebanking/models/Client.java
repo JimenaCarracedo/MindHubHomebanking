@@ -26,8 +26,6 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> loans = new HashSet<>();
 
-    private double amount;
-
     @OneToMany(mappedBy = "client")
     private Set<Card> cards;
     public Client() {
@@ -71,15 +69,6 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
 
     public Set<Account> getAccounts() {
         return accounts;
