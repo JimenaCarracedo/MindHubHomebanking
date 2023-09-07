@@ -3,8 +3,17 @@
     padding: 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
+
+
 }
 
+.col, .col-md-2, .mt-5{
+background-color: black;
+}
+
+.form-label{
+color: #ee0979;
+}
 .account {
     background: linear-gradient(45deg, #ee0979, #ff6a00);
     color: white;
@@ -12,11 +21,11 @@
 }
 
 .account:hover {
-    box-shadow: 2px 2px 10px black;
+    box-shadow: 2px 2px 10px #ee0979;
 }
 
 .account-details-header {
-    background: linear-gradient(45deg, #ee0979, #ff6a00);
+    background-color: linear-gradient(45deg, #ee0979, #ff6a00);
     color: white;
 }
 
@@ -27,10 +36,15 @@
 
 .account-link {
     text-decoration: none;
+
 }
 
 .subtitle {
     display: inline;
+}
+
+h1, h2, .nav-link, th{
+color: white;
 }
 
 #create {
@@ -38,27 +52,33 @@
 }
 
 .credit-transaction {
-    color: green;
+    color: rgb(7, 243, 7);
 }
 
 .debit-transaction {
-    color: red;
+    color: #ee09cf;
 }
-
+.nav-link:hover{
+background-color: #198754;
+color: white;
+}
 .loan {
     background: linear-gradient(45deg, #ee09cf, #0026ff);
     color: white;
 }
-
 .menu-logo {
     width: 100px;
     height: 40px;
+    background-color #5573f8cc;
+    margin-top: 1%;
 }
 
 .welcome {
     background: linear-gradient(45deg, #5573f8cc, #2d0a66);
 }
-
+.menu-logo{
+background-color: #5f2de9;
+}
 .welcome-logo {
     width: 60%;
 }
@@ -76,3 +96,12 @@
 .rounded-5 {
     border-radius: 10px;
 }
+
+.btn-danger{
+background-color: #ee0979;
+}
+.btn-close{
+background-color: #071877;
+color: white;
+}
+
