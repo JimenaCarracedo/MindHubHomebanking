@@ -1,5 +1,4 @@
-FROM gradle:8.1.1-jdk11-alpine
-RUN gradle build || return 0
+FROM openjdk:8
 COPY . .
 RUN gradle clean build
 EXPOSE 8080
