@@ -1,6 +1,6 @@
-FROM openjdk:8
-FROM gradle:8.2.1 AS BUILD
+FROM gradle:8.2.1-jdk-alpine
 COPY . .
-RUN gradle build
+
 EXPOSE 8080
+RUN gradle build
 ENTRYPOINT ["java", "-jar", "build/libs/homebanking-0.0.1-SNAPSHOT.jar"]
