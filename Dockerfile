@@ -1,5 +1,5 @@
 FROM openjdk:8
-FROM gradle:latest
+FROM gradle:latest AS BUILD
 COPY . .
 RUN gradle build
 EXPOSE 8080
