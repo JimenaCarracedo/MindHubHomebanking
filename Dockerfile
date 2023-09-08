@@ -1,5 +1,4 @@
-FROM openjdk:8
-FROM gradle:latest AS BUILD
+FROM gradle:jdk11-alpine AS BUILD_STAGE
 COPY . .
 RUN gradle build
 EXPOSE 8080
