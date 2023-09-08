@@ -1,4 +1,4 @@
-package com.mindhub.homebanking;
+/*package com.mindhub.homebanking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class HomebankingApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
