@@ -1,4 +1,4 @@
-FROM gradle:8.2.1-jdk-alpine
+FROM gradle:8.2.1-jdk11-alpine
 COPY . .
 
 EXPOSE 8080
