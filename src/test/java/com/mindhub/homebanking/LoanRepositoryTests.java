@@ -31,7 +31,6 @@ public class LoanRepositoryTests {
 
 
     @Test
-
     public void existPersonalLoan(){
 
         List<Loan> loans = loanRepository.findAll();
