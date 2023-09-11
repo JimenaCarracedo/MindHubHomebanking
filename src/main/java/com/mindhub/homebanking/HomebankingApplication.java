@@ -38,6 +38,7 @@ public class HomebankingApplication {
 		return (args) -> {
 			// save a client
 
+
 			Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));
 			clientRepository.save(client);
 			Client client1 = new Client("Juan", "García", "juan@mindhub.com", passwordEncoder.encode("321"));
