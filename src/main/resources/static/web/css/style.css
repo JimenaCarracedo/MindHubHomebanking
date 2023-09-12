@@ -8,11 +8,11 @@
 }
 
 body{
-background-color: black;
+background-color: #094258;
 }
 
 .form-label{
-color: #ee0979;
+color: white;
 }
 .account {
     background: linear-gradient(45deg, #ee0979, #ff6a00);
@@ -52,15 +52,15 @@ color: white;
 }
 
 .credit-transaction {
-    color: rgb(7, 243, 7);
+    color: rgb(134, 231, 134);
 }
 
 .debit-transaction {
-    color: #ee09cf;
+    color: red;
 }
 .nav-link:hover{
-background-color: #198754;
-color: white;
+background-color: #0d6efd;
+color: black;
 }
 .loan {
     background: linear-gradient(45deg, #ee09cf, #0026ff);
@@ -69,16 +69,14 @@ color: white;
 .menu-logo {
     width: 100px;
     height: 40px;
-    background-color #5573f8cc;
+    background-color: #094258;
     margin-top: 1%;
 }
 
 .welcome {
     background: linear-gradient(45deg, #5573f8cc, #2d0a66);
 }
-.menu-logo{
-background-color: #5f2de9;
-}
+
 .welcome-logo {
     width: 60%;
 }
@@ -101,6 +99,6 @@ background-color: #5f2de9;
 background-color: #ee0979;
 }
 .btn-close{
-background-color: #071877;
+background-color: #ee0979;
 color: white;
 }
