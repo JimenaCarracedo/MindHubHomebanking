@@ -34,13 +34,13 @@ public class AccountController {
     private ClientService clientService;
     @Autowired
     TransactionService transactionService;
-    @RequestMapping("/accounts")
+    @GetMapping("/accounts")
     public List<AccountDTO> findAccount() {
 
         return accountService.findAll().stream().map(AccountDTO::new).collect(toList());
 
     }
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
 
         return new AccountDTO(accountService.findById(id));

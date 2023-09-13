@@ -1,21 +1,21 @@
 * {
     margin: 0px;
     padding: 0px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Garamond, sans-serif;
     box-sizing: border-box;
-
-
 }
 
 body{
-background-color: black;
+background-color: #5573f8cc;
 }
-
+.container{
+background-color: white;
+}
 .form-label{
-color: #ee0979;
+color: black;
 }
 .account {
-    background: linear-gradient(45deg, #ee0979, #ff6a00);
+    background: linear-gradient(45deg, #ee0979, black);
     color: white;
     box-shadow: 1px 1px 5px black;
 }
@@ -25,13 +25,14 @@ color: #ee0979;
 }
 
 .account-details-header {
-    background-color: linear-gradient(45deg, #ee0979, #ff6a00);
+    background-color: linear-gradient(45deg, #ee0979, black);
     color: white;
 }
 
 .account-balance {
     font-size: 2em;
     margin: 0px;
+
 }
 
 .account-link {
@@ -44,7 +45,7 @@ color: #ee0979;
 }
 
 h1, h2, .nav-link, th{
-color: white;
+color: black;
 }
 
 #create {
@@ -52,42 +53,43 @@ color: white;
 }
 
 .credit-transaction {
-    color: rgb(7, 243, 7);
+    color: rgb(5, 49, 5);
 }
 
 .debit-transaction {
-    color: #ee09cf;
+    color: red;
+
 }
-.nav-link:hover{
-background-color: #198754;
-color: white;
+.nav-link:hover {
+background-color: white;
+color: black;
 }
+
 .loan {
-    background: linear-gradient(45deg, #ee09cf, #0026ff);
+    background: linear-gradient(45deg, black, #0026ff);
     color: white;
 }
 .menu-logo {
     width: 100px;
     height: 40px;
-    background-color #5573f8cc;
+    background-color: white;
     margin-top: 1%;
+
 }
 
 .welcome {
     background: linear-gradient(45deg, #5573f8cc, #2d0a66);
 }
-.menu-logo{
-background-color: #5f2de9;
-}
+
 .welcome-logo {
     width: 60%;
 }
 
-.index-body {
+/*.index-body {
     background-image: url(../img/mindhub.jpg);
     background-size: cover;
     background-attachment: fixed;
-}
+}*/
 
 .index-container {
     margin-top: 10%;
@@ -101,7 +103,6 @@ background-color: #5f2de9;
 background-color: #ee0979;
 }
 .btn-close{
-background-color: #071877;
+background-color: #ee0979;
 color: white;
 }
-

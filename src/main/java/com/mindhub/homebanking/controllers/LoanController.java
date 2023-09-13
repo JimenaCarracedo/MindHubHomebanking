@@ -38,7 +38,7 @@ public class LoanController {
     }
 
 
-    @RequestMapping(path = "/loans", method = RequestMethod.POST)
+    @PostMapping(path = "/loans")
     public ResponseEntity<Object> createLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
 
         if (loanApplicationDTO == null) {

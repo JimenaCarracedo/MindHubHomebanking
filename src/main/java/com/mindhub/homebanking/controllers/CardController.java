@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,14 +31,14 @@ public class CardController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping("/clients/current/cards")
+    @GetMapping("/clients/current/cards")
     public List<CardDTO> findCard(Authentication authentication) {
 
         return cardService.findByClient(clientService.findByEmail(authentication.getName())).stream().map(CardDTO::new).collect(toList());
 
     }
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping(path = "/clients/current/cards")
     public ResponseEntity<Object> create(@RequestParam CardColor cardColor,
                                          @RequestParam CardType cardType,
                                          Authentication authentication, String number, Integer cvv) {

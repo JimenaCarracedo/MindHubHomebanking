@@ -41,13 +41,13 @@ public class ClientController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/admin")
+    @GetMapping("/admin")
     public List<ClientDTO> findClient() {
 
         return clientService.findAll().stream().map(ClientDTO::new).collect(toList());
 
     }
-    @RequestMapping("/admin/clients/{id}")
+    @GetMapping("/admin/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
 
@@ -57,7 +57,7 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping(path = "/clients")
     public ResponseEntity<Object> register(
 
             @RequestParam String firstName,
@@ -89,7 +89,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getAll(Authentication authentication) {
 
         return new ClientDTO(clientService.findByEmail(authentication.getName()));
